@@ -21,8 +21,10 @@
  *****************************************************************************/
 
 define([
-    'legacyRegistry'
+    "./src/MyItemsModelProvider",
+    "legacyRegistry"
 ], function (
+    MyItemsModelProvider,
     legacyRegistry
 ) {
 
@@ -30,6 +32,12 @@ define([
         "name": "My Items",
         "description": "Defines a root named My Items",
         "extensions": {
+            "types": [
+                { "key": "my-items.andrew-emelianenko", "name": "Andrew Emelianenko", "cssClass": "icon-page", "description": "CV of Andrew Emelianenko" }
+            ],
+            "views": [
+                { "key": "my-items.andrew-emelianenko", "type": "my-items.andrew-emelianenko", "templateUrl": "templates/andrew-emelianenko.html", "editable": false }
+            ],
             "roots": [
                 {
                     "id": "mine"
@@ -41,11 +49,23 @@ define([
                     "model": {
                         "name": "My Items",
                         "type": "folder",
-                        "composition": [],
+                        "composition": [
+                            "andrew-emelianenko"
+                        ],
                         "location": "ROOT"
                     }
                 }
-            ]
+            ],
+            "components": [
+                {
+                    "provides": "modelService",
+                    "type": "provider",
+                    "implementation": MyItemsModelProvider,
+                    "depends": [
+                        "$q"
+                    ]
+                }
+            ],
         }
     });
 });
